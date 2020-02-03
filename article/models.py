@@ -8,7 +8,7 @@ class User(models.Model):
     password = models.CharField(max_length=75)
     email = models.CharField(max_length=50)
     is_active = models.BooleanField(default=False)
-    created_at = models.DateField()
+    created_at = models.DateField(datetime.now())
     updated_at = models.DateField(null=True)
     last_login_at = models.DateField(null=True)
     is_blocked = models.BooleanField(default=False)
@@ -45,6 +45,11 @@ class Comment(models.Model):
     updated_at = models.DateField(null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+
+class Rating(models.Model):
+    id_rating = models.AutoField(primary_key=True)
+    rate = models.IntegerField()
 
 
 
