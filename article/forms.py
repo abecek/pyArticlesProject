@@ -1,7 +1,9 @@
 from pprint import pprint
 from django import forms
 from django.contrib.auth.models import User
+from article.models import ArticleUser
 from django.contrib.auth.forms import UserCreationForm
+from datetime import datetime
 
 
 class RegistrationForm(UserCreationForm):
@@ -19,12 +21,19 @@ class RegistrationForm(UserCreationForm):
         }
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=True)
-        user.first_name = self.cleaned_data.get('first_name')
-        user.last_name = self.cleaned_data.get('last_name')
-        user.email = self.cleaned_data.get('email')
+        authUser = super(RegistrationForm, self).save(commit=True)
+        authUser.first_name = self.cleaned_data.get('first_name')
+        authUser.last_name = self.cleaned_data.get('last_name')
+        authUser.email = self.cleaned_data.get('email')
+
+        articleUser = ArticleUser()
 
         if commit:
-            user.save()
+            articleUser.auth_user = authUser
+            articleUser.updated_at = datetime.now()
+            articleUser.is_blocked = False
 
-        return user
+            authUser.save()
+            articleUser.save()
+
+        return authUser

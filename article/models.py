@@ -2,12 +2,14 @@ from django.db import models
 from datetime import datetime
 
 
-class User(models.Model):
-    id_user = models.AutoField(primary_key=True)
-    is_active = models.BooleanField(default=False)
-    updated_at = models.DateField(null=True)
+class ArticleUser(models.Model):
+    auth_user = models.OneToOneField(
+        primary_key=True,
+        to='auth.User',
+        on_delete=models.CASCADE
+    )
     is_blocked = models.BooleanField(default=False)
-    auth_user = models.ForeignKey(null=True, to='auth.User', on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Category(models.Model):
@@ -16,6 +18,8 @@ class Category(models.Model):
     is_enabled = models.BooleanField(default=True)
     is_visible_for_quests = models.BooleanField(default=True)
     include_in_menu = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     parent_category = models.ForeignKey(null=True, to='article.Category')
 
 
@@ -23,28 +27,29 @@ class Article(models.Model):
     id_article = models.AutoField(primary_key=True)
     unique_id_article = models.PositiveIntegerField(serialize=False)
     title = models.CharField(max_length=200)
-    created_at = models.DateField(datetime.now())
-    updated_at = models.DateField(null=True)
     content = models.TextField()
     is_published = models.BooleanField(default=True)
     is_visible_for_quests = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     parent_article = models.ForeignKey(null=True, to='article.Article')
     category = models.ForeignKey(Category, null=True)
-    author = models.ForeignKey(User, null=True)
+    author = models.ForeignKey(ArticleUser, null=True)
 
 
 class Comment(models.Model):
     id_model = models.AutoField(primary_key=True)
     content = models.TextField()
-    created_at = models.DateField(datetime.now())
-    updated_at = models.DateField(null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(ArticleUser, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
 
 class Rating(models.Model):
     id_rating = models.AutoField(primary_key=True)
     rate = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 
