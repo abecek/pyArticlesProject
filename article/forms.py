@@ -2,12 +2,13 @@ from pprint import pprint
 from django import forms
 from django.contrib.auth.models import User
 from article.models import ArticleUser
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django import forms
 from datetime import datetime
 
 
 class RegistrationForm(UserCreationForm):
-    #email = models.EmailField(required=True)
+    email = forms.EmailField()
 
     class Meta:
         model = User
@@ -35,5 +36,25 @@ class RegistrationForm(UserCreationForm):
 
             authUser.save()
             articleUser.save()
+
+        return authUser
+
+
+class ChangePasswordForm(PasswordChangeForm):
+
+    class Meta :
+        model = User
+        fields = {
+            'new_password1',
+            'new_password2',
+            'old_password'
+        }
+
+    def save(self, commit=True):
+        authUser = super(ChangePasswordForm, self).save(commit=True)
+        authUser.password = self.cleaned_data.get('new_password1')
+
+        if commit:
+            authUser.save()
 
         return authUser

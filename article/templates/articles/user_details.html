@@ -16,26 +16,39 @@
                 <dt>Username</dt>
                 <dd>{{ request.user.username }}</dd>
 
+                <dt>First Name</dt>
+                <dd>{{ request.user.first_name }}</dd>
+
+                <dt>Last Name</dt>
+                <dd>{{ request.user.last_name }}</dd>
+
                 <dt>Email</dt>
                 <dd>{{ request.user.email }}</dd>
 
                 <dt>Date Joined</dt>
                 <dd>{{ request.user.date_joined }}</dd>
 
+                <dt>Last Updated At</dt>
+                <dd>{{ request.user.articleuser.updated_at }}</dd>
+
                 <dt>Last Login</dt>
                 <dd>{{ request.user.last_login }}</dd>
             </dl>
-
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-6">
             <h4>Related Links</h4>
             <p>
-                <a href="#">Change Password.</a> <br>
-                <a href="{% url 'logout' %}">Logout.</a> <br>
+                <a href="{% url 'change_password' %}">Change Password</a> <br>
+                <a href="{% url 'logout' %}">Logout</a> <br>
             </p>
         </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
     </div>
 
 {% endblock %}

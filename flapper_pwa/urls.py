@@ -34,5 +34,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'articles/login.html'}, name='login'),
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', views.logout, name='logout'),
-    url('account/userdetails/$', views.user_details, name='user_details'),
+    url(r'^changepassword/$', views.change_password, name='change_password'),
+    url(r'^account/userdetails/$', views.user_details, name='user_details'),
+    url(r'^article/(?P<id_article>[0-9]+)/$', views.article_view, name='article_view')
 ]

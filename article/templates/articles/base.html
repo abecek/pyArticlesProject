@@ -11,6 +11,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style type="text/css">
 		.dropdown-span{
 			text-align: center;
@@ -80,12 +81,32 @@
 		</nav>
 		<div id="content" class="container">
 			<br>
-			<br>
 			{% if not request.user.is_authenticated and not request.path == '/login/'  %}
                 <p class="alert alert-info">
-                    <a href="{% url 'login' %}" class="alert-link">Login</a> to access other cool features.
+                    <a href="{% url 'login' %}" class="alert-link">Login</a> to access all site features!
                 </p>
             {% endif %}
+			<div class="row">
+				<div class="col-md-12">
+					{% if messages %}
+						{% for message in messages %}
+								{% if 'error' in message.tags %}
+									<div class="alert alert-danger" role="alert">
+										{{ message }}
+									</div>
+								{% elif 'info' in message.tags %}
+									<div class="alert alert-info" role="alert">
+										{{ message }}
+									</div>
+								{% elif 'success' in message.tags %}
+									<div class="alert alert-primary" role="alert">
+										{{ message }}
+									</div>
+								{% endif %}
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
 			<br>
 			{% block content %}
 			{% endblock %}

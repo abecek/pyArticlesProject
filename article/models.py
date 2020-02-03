@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 
 class ArticleUser(models.Model):
@@ -14,6 +13,7 @@ class ArticleUser(models.Model):
 
 class Category(models.Model):
     id_category = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
     description = models.TextField()
     is_enabled = models.BooleanField(default=True)
     is_visible_for_quests = models.BooleanField(default=True)
