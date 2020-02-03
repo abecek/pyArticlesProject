@@ -16,6 +16,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Category',
+            fields=[
+                ('id_category', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=255)),
+                ('description', models.TextField()),
+                ('is_enabled', models.BooleanField(default=True)),
+                ('is_visible_for_quests', models.BooleanField(default=True)),
+                ('include_in_menu', models.BooleanField(default=True))
+            ]
+        ),
+        migrations.AddField(
+            model_name='Category',
+            name='parent_category',
+            field=models.ForeignKey(null=True, to='article.Category'),
+        ),
+
+
+        migrations.CreateModel(
             name='Article',
             fields=[
                 ('id_article', models.AutoField(primary_key=True, serialize=False)),
@@ -25,14 +43,16 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateField(null=True)),
                 ('content', models.TextField()),
                 ('is_published', models.BooleanField(default=True)),
-                ('is_visible_for_quests', models.BooleanField(default=True))
+                ('is_visible_for_quests', models.BooleanField(default=True)),
+                #('id_role', models.PositiveIntegerField(default=0))
             ],
         ),
         migrations.AddField(
-            model_name='article',
+            model_name='Article',
             name='parent_article',
             field=models.ForeignKey(null=True, to='article.Article'),
         ),
+
 
         migrations.CreateModel(
             name='User',
@@ -49,8 +69,51 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='article',
+            model_name='User',
+            name='auth_user',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auth.User'),
+        ),
+
+
+        migrations.CreateModel(
+            name='Rating',
+            fields=[
+                ('id_rating', models.AutoField(primary_key=True, serialize=False)),
+                ('rate', models.IntegerField(max_length=1))
+            ]
+        ),
+
+        migrations.CreateModel(
+            name='Comment',
+            fields=[
+                ('id_comment', models.AutoField(primary_key=True, serialize=False)),
+                ('content', models.TextField(max_length=500)),
+                ('created_at', models.DateField()),
+                ('updated_at', models.DateField(null=True)),
+            ],
+        ),
+
+        migrations.AddField(
+            model_name='Article',
+            name='category',
+            field=models.ForeignKey(null=True, to='article.Category'),
+        ),
+        migrations.AddField(
+            model_name='Article',
             name='author',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='article.User'),
         ),
+
+        migrations.AddField(
+            model_name='Comment',
+            name='author',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='article.User'),
+        ),
+        migrations.AddField(
+            model_name='Comment',
+            name='article',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='article.Article'),
+        ),
+
+
     ]

@@ -102,6 +102,7 @@ DATABASES = {
     }
 }
 
+#AUTH_USER_MODEL = 'article.ArticleUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
