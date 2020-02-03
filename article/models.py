@@ -4,13 +4,8 @@ from datetime import datetime
 
 class User(models.Model):
     id_user = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    password = models.CharField(max_length=75)
-    email = models.CharField(max_length=50)
     is_active = models.BooleanField(default=False)
-    created_at = models.DateField(datetime.now())
     updated_at = models.DateField(null=True)
-    last_login_at = models.DateField(null=True)
     is_blocked = models.BooleanField(default=False)
     auth_user = models.ForeignKey(null=True, to='auth.User', on_delete=models.CASCADE)
 
