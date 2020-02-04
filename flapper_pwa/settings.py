@@ -15,8 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'article/static/js', 'serviceworker.js')
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -142,9 +140,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/html/pyProjects/flapper_pwa/static/'
+STATICFILES_DIRS = [
+    #os.path.join(BASE_DIR, "assets"),
+    #'/var/www/static/',
+]
 
 PWA_APP_NAME = 'Articles'
 PWA_APP_DESCRIPTION = "custom description"
+PWA_SERVICE_WORKER_PATH = '/var/www/html/pyProjects/flapper_pwa/static/article/js/serviceworker.js'
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
@@ -153,14 +157,14 @@ PWA_APP_START_URL = ''
 PWA_APP_ORIENTATION = 'any'
 PWA_APP_ICONS = [
     {
-        #'src': '/static/images/my_app_icon.png',
-        #'sizes': '160x160'
+        'src': '/static/images/icons/icon-152x152.png',
+        'sizes': '152x152'
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        #'src': '/static/images/icons/splash-640x1136.png',
-        #'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+        'src': '/static/images/icons/splash-640x1136.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
 PWA_APP_DIR = 'ltr'

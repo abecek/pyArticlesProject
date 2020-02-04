@@ -9,6 +9,7 @@ from article.forms import RegistrationForm, ChangePasswordForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import json
+import os
 from datetime import datetime
 
 '''

@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from article import views
 
 urlpatterns = [
+    url('', include('pwa.urls')),
     url(r'^admin/', admin.site.urls),
 
     #url('', include('pwa.urls')),
