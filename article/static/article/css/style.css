@@ -9,7 +9,7 @@ span{
 }
 
 #content{
-    padding-bottom: 5%;
+    padding-bottom: 10%;
 }
 
 .dropdown-span{
@@ -40,4 +40,8 @@ span{
 .wrapper{
     position: relative;
     min-height: 100%;
+}
+
+.auth-controls{
+    float: right;
 }

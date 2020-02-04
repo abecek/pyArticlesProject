@@ -1,9 +1,9 @@
  <!DOCTYPE html>
 <html>
- 	{% load pwa %}
+<!-- load pwa -->
  	{% load static %}
 <head>
-    {% progressive_web_app_meta %}
+<!-- progressive_web_app_meta -->
 	<title>Articles</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
@@ -13,7 +13,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="{% static 'article/css/style.css' %}">
-
 </head>
 <body>
 	<div class="wrapper">
@@ -24,7 +23,21 @@
 		  	</button>
 		  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		  		<ul class="navbar-nav mr-auto">
-					{% if request.user.is_authenticated %}
+					<li class="nav-item dropdown" >
+						<a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Categories
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							{% for category in categories %}
+								<a id="{{ category.id_category }}" class="dropdown-item" href="{% url 'category_view' category.id_category %}">{{ category.name }}</a>
+							{% endfor %}
+						</div>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About</a>
+			      	</li>
+
+						{% if request.user.is_authenticated %}
 						<li class="nav-item active">
 							<a class="nav-link" href="{% url 'user_details' %}">Account Details</a>
 						</li>
@@ -36,10 +49,6 @@
 							<a class="nav-link" href="{% url 'login' %}">Sign Up</a>
 						</li>
 					{% endif %}
-
-					<li class="nav-item active">
-						<a class="nav-link" href="#">About</a>
-			      	</li>
 		  		</ul>
 		  	</div>
 		</nav>

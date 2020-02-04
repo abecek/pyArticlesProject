@@ -46,9 +46,18 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
 
+RATE_CHOICES = [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5')
+]
+
+
 class Rating(models.Model):
     id_rating = models.AutoField(primary_key=True)
-    rate = models.IntegerField()
+    rate = models.CharField(max_length=1, choices=RATE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

@@ -1,12 +1,14 @@
 var staticCacheName = 'djangopwa-v2';
 
+/*
+
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
-        '/',
-        '/article/1/',
-        '/article/2/'
+        //'/',
+        //'/article/1/',
+        //'/article/2/'
       ]);
     })
   );
@@ -19,10 +21,6 @@ self.addEventListener('fetch', function(event) {
         event.respondWith(caches.match('/'));
         return;
       }
-      else if ((requestUrl.pathname === '/article/1/')) {
-        event.respondWith(caches.match('/article/1/'));
-        return;
-      }
     }
     event.respondWith(
       caches.match(event.request).then(function(response) {
@@ -30,3 +28,5 @@ self.addEventListener('fetch', function(event) {
       })
     );
 });
+
+ */
