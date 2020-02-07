@@ -37,8 +37,11 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^changepassword/$', views.change_password, name='change_password'),
     url(r'^account/userdetails/$', views.user_details, name='user_details'),
+
     url(r'^article/(?P<id_article>[0-9]+)/$', views.article_view, name='article_view'),
+    url(r'^article/add/$', views.article_add, name='article_add'),
 
     url(r'^categories/$', views.categories, name='categories'),
-    url(r'^category/(?P<id_category>[0-9]+)/$', views.category_view, name='category_view')
+    url(r'^category/(?P<id_category>[0-9]+)/$', views.category_view, name='category_view'),
+    url(r'^category/add/$', views.category_add, name='category_add'),
 ]

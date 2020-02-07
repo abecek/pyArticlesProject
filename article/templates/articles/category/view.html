@@ -7,23 +7,23 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <a class="btn btn-primary" href="{% url 'home' %}" role="button">
-                <i class="fas fa-arrow-left"></i>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
                 Back
             </a>
+
+			<div>
+				{% for subCat in subCategories %}
+					<a href="{% url 'category_view' subCat.id_category %}"> {{ subCat.name }} </a>
+					<br>
+				{% endfor %}
+			</div>
         </div>
     </div>
-
     <br>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <h2>{{ category.title }}</h2>
-        </div>
-    </div>
-
     <div class="row">
 		<div class="col-md-12">
 			<div class="articles">
-				<h1>Category articles:</h1>
+				<h1>Category {{ category.name }} articles:</h1>
 				<br>
 				{% for article in articles %}
 					<a href="{% url 'article_view' article.id_article %}">

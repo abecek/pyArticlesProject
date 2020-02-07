@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib import auth, messages
 from django.core import serializers
 from . models import Article, Category
-from article.forms import RegistrationForm, ChangePasswordForm
+from article.forms import RegistrationForm, ChangePasswordForm, ArticleForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import json
@@ -13,8 +13,10 @@ from datetime import datetime
 
 
 def get_all_categories():
-    results = Category.objects.all()
-    return results
+    mainCategories = Category.objects.filter(parent_category__isnull=True)
+    subCategories = Category.objects.filter(parent_category__isnull=False)
+
+    return mainCategories
 
 
 def index(request):
@@ -47,7 +49,16 @@ def category_view(request, id_category):
     context = {
         'category': Category.objects.get(pk=id_category),
         'categories': get_all_categories(),
+        'subCategories': Category.objects.filter(parent_category=Category.objects.get(pk=id_category)),
         'articles': Article.objects.all().filter(category_id=id_category).order_by('-created_at')
+    }
+    return render(request, template, context)
+
+
+def category_add(request):
+    template = 'articles/category/add.html'
+    context = {
+        'categories': get_all_categories(),
     }
     return render(request, template, context)
 
@@ -57,6 +68,28 @@ def article_view(request, id_article):
     context = {
         'article': Article.objects.get(pk=id_article),
         'categories': get_all_categories()
+    }
+    return render(request, template, context)
+
+
+def article_add(request):
+    if not request.user.is_authenticated():
+        messages.error(request, '????')
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            messages.add_message(request, messages.SUCCESS, 'Your article is created!')
+            return redirect('article_view', id_article=article.id_article)
+    else:
+        form = ArticleForm()
+
+    template = 'articles/article/add.html'
+    context = {
+        'categories': get_all_categories(),
+        'form': form
     }
     return render(request, template, context)
 
@@ -141,7 +174,7 @@ def logout(request):
 
 def user_details(request):
     if request.user.is_authenticated():
-        messages.error(request, '??')
+        messages.error(request, 'Something went wrong during authorization.')
         return redirect('home')
 
     context = {

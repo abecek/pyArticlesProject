@@ -20,7 +20,10 @@ class Category(models.Model):
     include_in_menu = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    parent_category = models.ForeignKey(null=True, to='article.Category')
+    parent_category = models.ForeignKey('self', blank=True, null=True, related_name='children')
+
+    def get_choice(self):
+        return self.id_category, str(self.name), self.id_category
 
 
 class Article(models.Model):
